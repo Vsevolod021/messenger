@@ -1,0 +1,72 @@
+.app 
+  padding: 20px
+
+  &__indicator 
+    margin: 10px 0
+    &--connected 
+      color: seaGreen
+      &::before 
+        background-color: seaGreen
+    &--disconnected
+      color: indianRed
+      &::before 
+        background-color: indianRed
+    &::before 
+      content: ''
+      display: inline-block
+      width: 10px
+      height: 10px
+      border-radius: 50%
+      margin-right: 10px
+
+  &__input 
+    border: 1px solid teal
+    display: flex
+    gap: 10px
+    padding: 10px
+    border-radius: 10px
+    input 
+      display: block
+      width: auto
+      flex: 1 1 auto
+      border-radius: 5px
+      outline: 1px solid teal
+      border: none
+      padding: 0 10px
+    button 
+      display: block
+      border: 1px solid teal
+      background-color: white
+      color: teal
+      padding: 10px 20px
+      border-radius: 5px
+      cursor: pointer
+      &:hover 
+        background-color: teal 
+        color: white
+      
+  &__messages-container 
+    padding: 20px 0
+    display: flex
+    flex-direction: column
+    gap: 10px
+    
+  &__message
+    position: relative
+    border: 1px solid teal
+    border-radius: 0 10px 10px 10px
+    width: 240px
+    padding: 10px 20px
+    opacity: 0
+    animation: 200ms ease-in-out messageAppearance forwards
+    span 
+      display: block
+      width: 180px
+      font-size: 18px
+    time 
+      display: block
+      position: absolute
+      bottom: 10px
+      right: 20px
+      color: grey 
+      font-size: 12px
