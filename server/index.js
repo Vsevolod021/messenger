@@ -1,10 +1,11 @@
 const express = require('express');
 const { WebSocketServer } = require('ws');
-
+const dotenv = require('dotenv');
 const app = express();
-const port = 9000;
+dotenv.config();
 
-const wss = new WebSocketServer({ port: 8000 });
+const port = process.env.BACKEND_PORT;
+const wss = new WebSocketServer({ port: process.env.WEBSOCKET_PORT });
 
 const history = [];
 
@@ -15,7 +16,7 @@ const broadcastMessage = () => {
   wss.clients.forEach((client) => client.send(JSON.stringify(sendedHistory)));
 };
 
-const messageHandler = (message, ws) => {
+const messageHandler = (message) => {
   const parsedMessage = JSON.parse(message.toString());
   history.push(parsedMessage);
 
@@ -25,7 +26,7 @@ const messageHandler = (message, ws) => {
 wss.on('connection', (ws) => {
   broadcastMessage();
 
-  ws.on('message', (message) => messageHandler(message, ws));
+  ws.on('message', messageHandler);
 });
 
 app.get('/', (_, res) => res.send('websocker server'));

@@ -1,6 +1,6 @@
 import { ref, onUnmounted, onMounted } from 'vue';
 
-export function useWebSocket(url = 'ws://localhost:8000') {
+export function useWebSocket(url = process.env.WEBSOCKET_URL) {
   const socket = ref(null);
   const isConnected = ref(false);
   const messages = ref([]);

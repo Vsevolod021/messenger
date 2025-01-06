@@ -22,12 +22,11 @@
 <script setup>
 import { ref } from 'vue';
 import dayjs from 'dayjs';
-
 import { useWebSocket } from './useWebsocket';
 
-const newMessage = ref('');
-
 const { send, error, messages, isConnected } = useWebSocket();
+
+const newMessage = ref('');
 
 const sendMessage = () => {
   if (newMessage.value === '') {
