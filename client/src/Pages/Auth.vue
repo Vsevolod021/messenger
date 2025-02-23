@@ -1,5 +1,5 @@
 <template>
-  <RouterView />
+  <div>This is Auth Page</div>
 </template>
 
 <script>
