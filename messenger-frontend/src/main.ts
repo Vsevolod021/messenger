@@ -6,15 +6,29 @@ import router from './router'
 
 import { io } from 'socket.io-client'
 
+const token = sessionStorage.getItem('token')
+
 const socket = io('http://localhost:9000', {
   auth: {
-    token:
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OTZiZWEzMTE2YmFkZGE0MzYyODdlNjIiLCJsb2dpbiI6InZzZXZvbG9kIiwiaWF0IjoxNzY5MTA5NjAxLCJleHAiOjE3NjkxMTA1MDF9.ifRKYNq2zleNMlfLXdZUwOhW1m3x2bslBcSo6nu6e3s',
+    token: token,
   },
 })
 
 socket.on('connect', () => {
   console.log('WS connected:', socket.id)
+})
+
+socket.emit('join:chat', {
+  chatId: 'chat-123',
+})
+
+socket.emit('chat:test', {
+  chatId: 'chat-123',
+  text: 'hello room',
+})
+
+socket.on('chat:test:response', (data) => {
+  console.log(data.from + ': ' + data.text)
 })
 
 socket.on('disconnect', () => {

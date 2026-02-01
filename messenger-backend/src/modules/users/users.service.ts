@@ -12,14 +12,14 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    return this.userModel.create(createUserDto);
+    return await this.userModel.create(createUserDto);
   }
 
   async findAll() {
-    return this.userModel.find();
+    return await this.userModel.find();
   }
 
   async findByLogin(login: string) {
-    return this.userModel.findOne({ login }).select('+passwordHash');
+    return await this.userModel.findOne({ login }).select('+passwordHash');
   }
 }
