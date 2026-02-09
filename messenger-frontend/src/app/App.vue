@@ -1,11 +1,18 @@
 <script setup lang="ts">
-import { AuthForm } from '@/features/auth'
+import { onMounted } from 'vue'
+import { useAuthStore } from '@/features/auth/model/auth.store'
+import { setupAuthEffects } from '@/features/auth'
+
+const authStore = useAuthStore()
+
+onMounted(() => {
+  setupAuthEffects()
+  authStore.init()
+})
 </script>
 
 <template>
-  <h1>Welcome to Messenger</h1>
-
-  <AuthForm />
+  <RouterView />
 </template>
 
 <style scoped></style>

@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './user.schema';
-import { Model } from 'mongoose';
 import { CreateUserDto } from './users.dto';
+import type { Request } from 'express';
+import { InjectModel } from '@nestjs/mongoose';
+import { Injectable } from '@nestjs/common';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class UsersService {
@@ -17,6 +18,10 @@ export class UsersService {
 
   async findAll() {
     return await this.userModel.find();
+  }
+
+  async findById(id: string) {
+    return await this.userModel.findById(id);
   }
 
   async findByLogin(login: string) {

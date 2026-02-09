@@ -1,2 +1,2 @@
 export const JWT_SECRET = 'super-secret-key'; // fixMe: use env variable
-export const JWT_EXPIRES_IN = '60m';
+export const JWT_EXPIRES_IN = '20m';
