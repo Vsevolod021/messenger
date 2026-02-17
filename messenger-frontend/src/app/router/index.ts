@@ -25,14 +25,19 @@ const router = createRouter({
       name: 'Chats',
       component: () => import('../../pages/chats/ChatsPage.vue'),
     },
+    {
+      path: '/feed',
+      name: 'Feed',
+      component: () => import('../../pages/feed/FeedPage.vue'),
+    },
   ],
 })
 
-router.beforeEach((to) => {
+router.beforeEach(async (to) => {
   const authStore = useAuthStore()
 
   if (authStore.authStatus === 'unknown') {
-    return true
+    await authStore.init()
   }
 
   if (authStore.authStatus === 'unauthorized' && !to.meta.public) {
@@ -40,7 +45,7 @@ router.beforeEach((to) => {
   }
 
   if (authStore.authStatus === 'authorized' && to.meta.public) {
-    return '/chats'
+    return '/feed'
   }
 
   return true

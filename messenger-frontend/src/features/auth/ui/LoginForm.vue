@@ -4,6 +4,9 @@ import { ref } from 'vue'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import { signIn } from '../utils/signIn'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const login = ref('')
 const password = ref('')
@@ -11,10 +14,12 @@ const password = ref('')
 async function onFormSubmit(event: SubmitEvent) {
   event.preventDefault()
 
-  signIn({
+  await signIn({
     login: login.value,
     password: password.value,
   })
+
+  router.push('/feed')
 }
 </script>
 

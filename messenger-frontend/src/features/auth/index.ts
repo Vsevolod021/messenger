@@ -1,5 +1,5 @@
 export { useAuthStore } from './model/auth.store'
-export { setupAuthEffects } from './model/auth.effects'
+export { setupAuthInterceptor } from './model/auth.interceptor'
 export { signIn } from './utils/signIn'
 export { logOut } from './utils/logOut'
 export { signUp } from './utils/signUp'
