@@ -1,17 +1,19 @@
-import { axiosApiInstance } from '@/shared/api'
-import { useAuthStore } from './auth.store'
+import { axiosApiInstance } from '@/shared/api';
+import { queryClient } from '@/shared/config';
+import { removeFromSessionStorage } from '@/shared/utils';
 
 export function setupAuthInterceptor(onUnauthorized: () => void) {
   axiosApiInstance.interceptors.response.use(
     (res) => res,
     (err) => {
       if (err.response?.status === 401) {
-        const authStore = useAuthStore()
-        authStore.logOut()
+        removeFromSessionStorage('accessToken');
+        queryClient.clear();
 
-        onUnauthorized()
+        onUnauthorized();
       }
-      return Promise.reject(err)
-    },
-  )
+
+      return Promise.reject(err);
+    }
+  );
 }

@@ -1,2 +1,5 @@
-export const LOGIN_API = '/auth/login'
-export const REGISTER_API = '/auth/register'
+export const authApiConstants = {
+  login: '/auth/login',
+  register: '/auth/register'
+};
+

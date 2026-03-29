@@ -1,7 +1,8 @@
-import { Controller, Get, Param, Post, Body } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Req } from '@nestjs/common';
 import { ChatsService } from './chats.service';
 import type { CreateChatDto } from './chat.dto';
 import { MessagesService } from '../messages/messages.service';
+import type { RequestWithUser } from '../auth/types/jwt-payload.type';
 
 @Controller('chats')
 export class ChatsController {
@@ -18,6 +19,11 @@ export class ChatsController {
   @Get()
   getChats() {
     return this.chatsService.getChats();
+  }
+
+  @Get('my')
+  getMyChats(@Req() req: RequestWithUser) {
+    return this.chatsService.getMyChats(req.user.userId);
   }
 
   @Get(':id')

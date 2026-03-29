@@ -1,6 +1,5 @@
-import { Body, Controller, Get, Headers, Req } from '@nestjs/common';
+import { Body, Controller, Get, Req } from '@nestjs/common';
 import { UsersService } from './users.service';
-import type { Request } from 'express';
 import type { RequestWithUser } from '../auth/types/jwt-payload.type';
 
 @Controller('users')

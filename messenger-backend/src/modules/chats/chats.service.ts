@@ -19,6 +19,10 @@ export class ChatsService {
     return await this.chatModel.find();
   }
 
+  async getMyChats(userId: string) {
+    return await this.chatModel.find({ participants: userId });
+  }
+
   async getChatData(id: string) {
     return await this.chatModel.findById(id).select('-messages');
   }

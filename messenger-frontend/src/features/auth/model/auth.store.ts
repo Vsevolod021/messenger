@@ -1,41 +1,48 @@
-import { getFromSessionStorage } from '@/shared/utils'
-import { getMyUser } from '@/entities/user'
-import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { usersQueries } from '@/entities/users/api/queries';
+import { queryClient } from '@/shared/config';
+import { create } from 'zustand';
+import {
+  removeFromSessionStorage,
+  getFromSessionStorage,
+  setToSessionStorage
+} from '@/shared/utils';
 
-type AuthStatus = 'unknown' | 'authorized' | 'unauthorized'
+export type AuthStatus = 'unknown' | 'authorized' | 'unauthorized';
 
-export const useAuthStore = defineStore('auth', () => {
-  const authStatus = ref<AuthStatus>('unknown')
+interface AuthState {
+  status: AuthStatus;
+  init: () => Promise<void>;
+  logIn: (accessToken: string) => void;
+  logOut: () => Promise<void>;
+}
 
-  async function init() {
+export const useAuthStore = create<AuthState>((set) => ({
+  status: 'unknown',
+
+  init: async () => {
     try {
-      const token = getFromSessionStorage('accessToken')
+      const token = getFromSessionStorage('accessToken');
 
       if (!token) {
-        authStatus.value = 'unauthorized'
-        throw new Error()
+        set({ status: 'unauthorized' });
+        return;
       }
 
-      await getMyUser()
-      authStatus.value = 'authorized'
+      await queryClient.fetchQuery(usersQueries.my());
+      set({ status: 'authorized' });
     } catch {
-      logOut()
+      await useAuthStore.getState().logOut();
     }
-  }
+  },
 
-  async function signIn() {
-    authStatus.value = 'authorized'
-  }
+  logIn: (accessToken: string) => {
+    setToSessionStorage('accessToken', accessToken);
+    set({ status: 'authorized' });
+  },
 
-  async function logOut() {
-    authStatus.value = 'unauthorized'
+  logOut: async () => {
+    removeFromSessionStorage('accessToken');
+    set({ status: 'unauthorized' });
+    await queryClient.clear();
   }
-
-  return {
-    authStatus,
-    init,
-    logOut,
-    logIn: signIn,
-  }
-})
+}));

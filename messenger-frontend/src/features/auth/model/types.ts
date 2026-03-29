@@ -1,14 +1,18 @@
-export interface AuthResponseDto {
-  accessToken: string
-}
+import z from 'zod';
 
-export type LoginRequestDto = {
-  login: string
-  password: string
-}
+export type LoginDto = {
+  login: string;
+  password: string;
+};
 
-export type RegisterRequestDto = {
-  login: string
-  password: string
-  displayName: string //fixMe. Сделать username
-}
+export type RegisterDto = {
+  login: string;
+  password: string;
+  displayName: string;
+};
+
+export const AuthResponceDtoSchema = z.object({
+  accessToken: z.string()
+});
+
+export type AuthResponseDto = z.infer<typeof AuthResponceDtoSchema>;

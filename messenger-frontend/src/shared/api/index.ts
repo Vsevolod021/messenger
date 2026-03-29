@@ -1,2 +1,2 @@
-export { getSocket, connectToSocketServer, disconnectFromSocketServer } from './socket/client'
-export { axiosApiInstance } from './axiosApiInstance/axiosApiInstance'
+export { getSocket, connectToSocketServer, disconnectFromSocketServer } from './socket/client';
+export { axiosApiInstance } from './axiosApiInstance/axiosApiInstance';
